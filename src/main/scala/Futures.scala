@@ -170,4 +170,19 @@ object Futures extends App {
     case Failure(ex) => println(s"Error processing future operations, ${ex.getMessage}")
   }
 
+  // Future.zipWith
+  // zipWith lets you combine the results of Future operations plus,
+  // allows you to pass-through a function which can be applied to the results
+  println(s"\n11: Function to convert Tuple (Option[Int], Double) to Tuple (Int, Double)")
+  val qtyAndPriceFut: (Option[Int], Double) => (Int, Double) = (someQty, price) => (someQty.getOrElse(0), price)
+
+  val boxerAndPriceOperation = boxersStock("hugo boss").zipWith(boxersPrice(15.99))(qtyAndPriceFut)
+  boxerAndPriceOperation.onComplete {
+    case Success(value) => println(s"ZipWith result: $value") // (10, 15.99)
+    case Failure(ex) => println(s"Error processing future operations, ${ex.getMessage}")
+  }
+
+  // Future.andThen
+  // andThen() is useful whenever you have need to apply a side-effect function on the result returned by the Future
+
 }
