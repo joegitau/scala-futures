@@ -1,0 +1,7 @@
+.bsp
+.idea
+.staging
+project
+target
+scala-futures.ipr
+scala-futures.iws
